@@ -1,7 +1,7 @@
 # TaskAPI 
 ***Em desenvolvimento***
 
-<p>A TaskAPI é responsável por criar e salvar tarefas, implementando um CRUD para que as *Tasks* sejam salvas no Back-end! O sistema foi desenvolvido utilizando ASP.NET, em específico, o template de *Minimal API*, utilizando o *C#* para o seu desenvolvimento</p>
+<p>A TaskAPI é responsável por criar e salvar tarefas, implementando um CRUD para que as <strong>Tasks</strong> sejam salvas no Back-end! O sistema foi desenvolvido utilizando <strong>ASP.NET</strong>, em específico, o template de <strong>Minimal API</strong>, utilizando o <strong>C#</strong> para o seu desenvolvimento!</p>
 
 ## Execução
 <p>
@@ -17,8 +17,8 @@ Como o projeto está muito no começo, ainda não existe muitas funcionalidades.
 <p>Aqui está os passos que ainda estou fazendo e as features que ainda estou implementando.<br/>
 </p>
 
-**( )** -> *Não Iniciado*
-**(/)** -> *Em Desenvolvimento*
+**( )** -> *Não Iniciado* <br/>
+**(/)** -> *Em Desenvolvimento* <br/>
 **(X)** -> *Concluido*
 
 ---
