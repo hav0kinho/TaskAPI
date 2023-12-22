@@ -35,7 +35,7 @@ Como o projeto está muito no começo, ainda não existe muitas funcionalidades.
         * Criação da rota(X)
         * Criação de validações ()
     * **DELETE** Tasks (/)
-        * Criação da rota()
+        * Criação da rota(X)
         * Criação de validações ()
 * Configuração do *Swagger* (X)
 * Documentação aprofundada da API ()
