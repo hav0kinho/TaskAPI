@@ -1,6 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using FluentValidation;
+using Microsoft.EntityFrameworkCore;
 using TasksAPI.Data;
 using TasksAPI.Models;
+using TasksAPI.Models.DTO;
 
 namespace TasksAPI.Endpoints;
 
@@ -17,9 +20,9 @@ public static class TaskEndpoints
         _routeGroup.MapDelete("/task/{id:int}", DeleteTask);
     }
 
-    private static async Task<List<TaskModel>> GetTasks(TaskDb db)
+    private static async Task<IResult> GetTasks(TaskDb db)
     {
-        return await db.Tasks.ToListAsync();
+        return Results.Ok(await db.Tasks.ToListAsync());
     }
 
     private static async Task<IResult> GetTask(int id, TaskDb db)
@@ -28,11 +31,23 @@ public static class TaskEndpoints
         return taskRequisitado != null ? Results.Ok(taskRequisitado) : Results.NotFound();
     }
 
-    private static async Task<IResult> PostTask(TaskModel task, TaskDb db)
+    private static async Task<IResult> PostTask(IMapper _mapper, IValidator<TaskDTO> _validation, TaskDTO taskDTO, TaskDb db)
     {
+        var validationResult = await _validation.ValidateAsync(taskDTO);
+
+        if(!validationResult.IsValid) // Verificando validação e retornando o primeiro erro;
+        {
+            return Results.BadRequest(validationResult.Errors.FirstOrDefault().ToString());
+        }
+
+        TaskModel task = _mapper.Map<TaskModel>(taskDTO); // Converter o TaskDTO recebido para TaskModel
+        task.Id = TaskStore.taskList.OrderByDescending(t => t.Id).FirstOrDefault().Id + 1; // Pega o maior ID que existe na lista, adiciona + 1 a nova task;
+
+        TaskDTO taskDTOCreated = _mapper.Map<TaskDTO>(task); // Converte a TaskModel em TaskDTO, para retornar ao usuário;
+
         await db.Tasks.AddAsync(task);
         await db.SaveChangesAsync();
-        return Results.Created($"/task/{task.Id}", task);
+        return Results.Created($"/task/{task.Id}", taskDTOCreated);
     }
 
     private static async Task<IResult> PutTask(int id, TaskModel task, TaskDb db)
