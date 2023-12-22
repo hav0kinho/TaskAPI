@@ -13,6 +13,7 @@ public static class TaskEndpoints
         _routeGroup.MapGet("/task", GetTasks);
         _routeGroup.MapGet("/task/{id:int}", GetTask);
         _routeGroup.MapPost("/task", PostTask);
+        _routeGroup.MapPut("/task/{id:int}", PutTask);
     }
 
     private static async Task<List<TaskModel>> GetTasks(TaskDb db)
@@ -31,5 +32,16 @@ public static class TaskEndpoints
         await db.Tasks.AddAsync(task);
         await db.SaveChangesAsync();
         return Results.Created($"/task/{task.Id}", task);
+    }
+
+    private static async Task<IResult> PutTask(int id, TaskModel task, TaskDb db)
+    {
+        var taskRequisitada = await db.Tasks.FindAsync(id);
+        taskRequisitada.Title = task.Title;
+        taskRequisitada.IsCompleted = task.IsCompleted;
+
+        await db.SaveChangesAsync();
+
+        return Results.NoContent();
     }
 }
