@@ -32,13 +32,13 @@ Como o projeto está muito no começo, ainda não existe muitas funcionalidades.
 
 ---
 
-* <span class="completo">Configuração Inicial (X)</span>
+* Configuração Inicial (X)
 * Criação de rotas (/)
     * **GET** Tasks (/)
-        * <span class="completo">Criação da rota(X)</span>
+        * Criação da rota(X)
         * Criação de validações ()
     * **POST** Tasks (/)
-        * <span class="completo">Criação da rota(X)</span>
+        * Criação da rota(X)
         * Criação de validações ()
     * **PATCH** Tasks ()
         * Criação da rota()
@@ -46,11 +46,11 @@ Como o projeto está muito no começo, ainda não existe muitas funcionalidades.
     * **DELETE** Tasks ()
         * Criação da rota()
         * Criação de validações ()
-* <span class="completo">Configuração do *Swagger* (X)</span>
+* Configuração do *Swagger* (X)
 * Documentação aprofundada da API ()
 * Configuração de Base de dados (/)
     * <s>Baseada em Classe (/)</s>
-    * <span class="completo">Baseada em InMemory (X)</span>
+    * Baseada em InMemory (X)
     * Baseada em SQL Server ()
 
 
