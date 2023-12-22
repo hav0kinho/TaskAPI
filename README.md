@@ -1,3 +1,12 @@
+<style>
+    .completo{
+        color: green;
+    }
+    .progresso{
+        color: yellow;
+    }
+</style>
+
 # TaskAPI 
 ***Em desenvolvimento***
 
@@ -23,13 +32,13 @@ Como o projeto está muito no começo, ainda não existe muitas funcionalidades.
 
 ---
 
-* Configuração Inicial (X)
+* <span class="completo">Configuração Inicial (X)</span>
 * Criação de rotas (/)
     * **GET** Tasks (/)
-        * Criação da rota(X)
+        * <span class="completo">Criação da rota(X)</span>
         * Criação de validações ()
     * **POST** Tasks (/)
-        * Criação da rota(X)
+        * <span class="completo">Criação da rota(X)</span>
         * Criação de validações ()
     * **PATCH** Tasks ()
         * Criação da rota()
@@ -37,11 +46,11 @@ Como o projeto está muito no começo, ainda não existe muitas funcionalidades.
     * **DELETE** Tasks ()
         * Criação da rota()
         * Criação de validações ()
-* Configuração do *Swagger* (X)
+* <span class="completo">Configuração do *Swagger* (X)</span>
 * Documentação aprofundada da API ()
 * Configuração de Base de dados (/)
     * <s>Baseada em Classe (/)</s>
-    * Baseada em InMemory (/)
+    * <span class="completo">Baseada em InMemory (X)</span>
     * Baseada em SQL Server ()
 
 
