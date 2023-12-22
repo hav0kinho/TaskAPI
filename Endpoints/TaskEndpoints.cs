@@ -1,4 +1,5 @@
-﻿using TasksAPI.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using TasksAPI.Data;
 using TasksAPI.Models;
 
 namespace TasksAPI.Endpoints;
@@ -14,21 +15,21 @@ public static class TaskEndpoints
         _routeGroup.MapPost("/task", PostTask);
     }
 
-    private static IResult GetTasks()
+    private static async Task<List<TaskModel>> GetTasks(TaskDb db)
     {
-        var listaTasks = TaskStore.taskList;
-        return Results.Ok(listaTasks);
+        return await db.Tasks.ToListAsync();
     }
 
-    private static IResult GetTask(int id)
+    private static async Task<IResult> GetTask(int id, TaskDb db)
     {
-        var taskRequisitada = TaskStore.taskList.FirstOrDefault(task => task.Id == id);
-        return Results.Ok(taskRequisitada);
+        var taskRequisitado = await db.Tasks.FindAsync(id);
+        return taskRequisitado != null ? Results.Ok(taskRequisitado) : Results.NotFound();
     }
 
-    private static IResult PostTask(TaskModel task)
+    private static async Task<IResult> PostTask(TaskModel task, TaskDb db)
     {
-        TaskStore.AddTask(task);
+        await db.Tasks.AddAsync(task);
+        await db.SaveChangesAsync();
         return Results.Created($"/task/{task.Id}", task);
     }
 }
