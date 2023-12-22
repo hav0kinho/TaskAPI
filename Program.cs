@@ -4,12 +4,15 @@ using Swashbuckle.AspNetCore; // Biblioteca para Swagger
 using TasksAPI.Data;
 using TasksAPI.Models;
 using TasksAPI.Endpoints;
-
+using TasksAPI.Data;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 // Services
 builder.Services.AddEndpointsApiExplorer(); // Prepara o terreno para criação do Swagger e OpenAI (Deve ser usado junto com o AddSwaggerGen())
 builder.Services.AddSwaggerGen(); // Permite a geração do Swagger
+
+builder.Services.AddDbContext<TaskDb>(opt => opt.UseInMemoryDatabase("TaskList")); //Usando o TaskDb como base, e nas opt, estamos configurando um Banco baseado no InMemory! Colocando o nome dele como sendo "TaskList"
 
 
 var app = builder.Build();
