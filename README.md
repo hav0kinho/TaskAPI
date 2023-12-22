@@ -1,12 +1,3 @@
-<style>
-    .completo{
-        color: green;
-    }
-    .progresso{
-        color: yellow;
-    }
-</style>
-
 # TaskAPI 
 ***Em desenvolvimento***
 
