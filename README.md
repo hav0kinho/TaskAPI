@@ -41,7 +41,7 @@ Como o projeto está muito no começo, ainda não existe muitas funcionalidades.
 * Documentação aprofundada da API ()
 * Configuração do AutoMapper para facilitar mapeamento de objetos e manutenabilidade()
 * Criação de validações com o FluentValidation ()
-* Criação de DTO para a TaskModel ()
+* Criação de DTO para a TaskModel (/)
 * Configuração de Base de dados (/)
     * <s>Baseada em Classe (/)</s>
     * Baseada em InMemory (X)
