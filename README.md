@@ -40,8 +40,8 @@ Como o projeto está muito no começo, ainda não existe muitas funcionalidades.
 * Configuração do *Swagger* (X)
 * Documentação aprofundada da API ()
 * Configuração de Base de dados (/)
-    * Baseada em Classe (/)
-    * Baseada em InMemory ()
+    * <s>Baseada em Classe (/)</s>
+    * Baseada em InMemory (/)
     * Baseada em SQL Server ()
 
 
