@@ -13,11 +13,11 @@ Com o código na sua máquina, basta você entrar no diretório da aplicação c
 ## Features
 A feature implementada é o CRUD das tasks, permitindo os usuários criarem, excluirem, buscarem e atualizarem as Tasks usando as rotas! As principais rotas são as seguintes:
 
-<code>GET - /api/task</code> -> Retorna todas as Tasks.
-<code>GET - /api/task/{id:int}</code> -> Retorna uma Task específica, dado o Id dela.
-<code>POST - /api/task</code> -> Cria uma Task e salva no banco, deve receber os dados da Task.
-<code>PUT - /api/task/{id:int}</code> -> Atualiza uma Task baseada no Id dado, deve receber os dados da Task.
-<code>DELETE - /api/task/{id:int}</code> ->  Deleta uma Task baseada no Id dado.
+* <code>GET - /api/task</code> -> Retorna todas as Tasks.
+* <code>GET - /api/task/{id:int}</code> -> Retorna uma Task específica, dado o Id dela.
+* <code>POST - /api/task</code> -> Cria uma Task e salva no banco, deve receber os dados da Task.
+* <code>PUT - /api/task/{id:int}</code> -> Atualiza uma Task baseada no Id dado, deve receber os dados da Task.
+* <code>DELETE - /api/task/{id:int}</code> ->  Deleta uma Task baseada no Id dado.
 
 **O banco implementado é baseado no InMemory**
 
