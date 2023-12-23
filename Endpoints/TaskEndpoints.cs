@@ -41,7 +41,7 @@ public static class TaskEndpoints
         }
 
         TaskModel task = _mapper.Map<TaskModel>(taskDTO); // Converter o TaskDTO recebido para TaskModel
-        task.Id = TaskStore.taskList.OrderByDescending(t => t.Id).FirstOrDefault().Id + 1; // Pega o maior ID que existe na lista, adiciona + 1 a nova task;
+        task.Id = new Random().Next(1, 100000000); // Gerando um ID PseudoÚnico (PRECISO TROCAR DEPOIS)
 
         TaskDTO taskDTOCreated = _mapper.Map<TaskDTO>(task); // Converte a TaskModel em TaskDTO, para retornar ao usuário;
 
@@ -50,9 +50,24 @@ public static class TaskEndpoints
         return Results.Created($"/task/{task.Id}", taskDTOCreated);
     }
 
-    private static async Task<IResult> PutTask(int id, TaskModel task, TaskDb db)
+    private static async Task<IResult> PutTask(IValidator<TaskDTO> _validation, IMapper _mapper, int id, TaskDTO taskDTO, TaskDb db)
     {
+        var validationResult = await _validation.ValidateAsync(taskDTO);
+
+        if(!validationResult.IsValid)
+        {
+            return Results.BadRequest(validationResult.Errors.FirstOrDefault().ToString());
+        }
+
+        var task = _mapper.Map<TaskModel>(taskDTO);
         var taskRequisitada = await db.Tasks.FindAsync(id);
+
+        if(taskRequisitada == null)
+        {
+            return Results.BadRequest("A task não foi encontrada");
+        }
+
+
         taskRequisitada.Title = task.Title;
         taskRequisitada.IsCompleted = task.IsCompleted;
 
@@ -64,6 +79,11 @@ public static class TaskEndpoints
     private static async Task<IResult> DeleteTask(int id, TaskDb db)
     {
         var taskRequisitada = await db.Tasks.FindAsync(id);
+        if(taskRequisitada == null)
+        {
+            return Results.BadRequest("Task não encontrada");
+        }
+
         db.Tasks.Remove(taskRequisitada);
 
         await db.SaveChangesAsync();
