@@ -38,7 +38,7 @@ Como o projeto está muito no começo, ainda não existe muitas funcionalidades.
         * Criação da rota(X)
         * Criação de validações (X)
 * Configuração do *Swagger* (X)
-* Documentação aprofundada da API (/)
+* Documentação aprofundada da API (X)
 * Configuração do AutoMapper para facilitar mapeamento de objetos e manutenabilidade(X)
 * Criação de validações com o FluentValidation (X)
 * Criação de DTO para a TaskModel (X)
