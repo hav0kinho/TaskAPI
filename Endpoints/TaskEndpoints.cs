@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using FluentValidation;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
 using TasksAPI.Data;
 using TasksAPI.Models;
@@ -20,24 +21,24 @@ public static class TaskEndpoints
         _routeGroup.MapDelete("/task/{id:int}", DeleteTask);
     }
 
-    private static async Task<IResult> GetTasks(TaskDb db)
+    private static async Task<Ok<TaskModel[]>> GetTasks(TaskDb db)
     {
-        return Results.Ok(await db.Tasks.ToListAsync());
+        return TypedResults.Ok(await db.Tasks.ToArrayAsync());
     }
 
-    private static async Task<IResult> GetTask(int id, TaskDb db)
+    private static async Task<Results<Ok<TaskModel>, NotFound>> GetTask(int id, TaskDb db)
     {
         var taskRequisitado = await db.Tasks.FindAsync(id);
-        return taskRequisitado != null ? Results.Ok(taskRequisitado) : Results.NotFound();
+        return taskRequisitado != null ? TypedResults.Ok(taskRequisitado) : TypedResults.NotFound();
     }
 
-    private static async Task<IResult> PostTask(IMapper _mapper, IValidator<TaskDTO> _validation, TaskDTO taskDTO, TaskDb db)
+    private static async Task<Results<Created<TaskDTO>, BadRequest<string>>> PostTask(IMapper _mapper, IValidator<TaskDTO> _validation, TaskDTO taskDTO, TaskDb db)
     {
         var validationResult = await _validation.ValidateAsync(taskDTO);
 
         if(!validationResult.IsValid) // Verificando validação e retornando o primeiro erro;
         {
-            return Results.BadRequest(validationResult.Errors.FirstOrDefault().ToString());
+            return TypedResults.BadRequest(validationResult.Errors.FirstOrDefault().ToString());
         }
 
         TaskModel task = _mapper.Map<TaskModel>(taskDTO); // Converter o TaskDTO recebido para TaskModel
@@ -47,16 +48,16 @@ public static class TaskEndpoints
 
         await db.Tasks.AddAsync(task);
         await db.SaveChangesAsync();
-        return Results.Created($"/task/{task.Id}", taskDTOCreated);
+        return TypedResults.Created($"/task/{task.Id}", taskDTOCreated);
     }
 
-    private static async Task<IResult> PutTask(IValidator<TaskDTO> _validation, IMapper _mapper, int id, TaskDTO taskDTO, TaskDb db)
+    private static async Task<Results<NoContent, BadRequest<string>>> PutTask(IValidator<TaskDTO> _validation, IMapper _mapper, int id, TaskDTO taskDTO, TaskDb db)
     {
         var validationResult = await _validation.ValidateAsync(taskDTO);
 
         if(!validationResult.IsValid)
         {
-            return Results.BadRequest(validationResult.Errors.FirstOrDefault().ToString());
+            return TypedResults.BadRequest(validationResult.Errors.FirstOrDefault().ToString());
         }
 
         var task = _mapper.Map<TaskModel>(taskDTO);
@@ -64,7 +65,7 @@ public static class TaskEndpoints
 
         if(taskRequisitada == null)
         {
-            return Results.BadRequest("A task não foi encontrada");
+            return TypedResults.BadRequest("A task não foi encontrada");
         }
 
 
@@ -73,21 +74,21 @@ public static class TaskEndpoints
 
         await db.SaveChangesAsync();
 
-        return Results.NoContent();
+        return TypedResults.NoContent();
     }
 
-    private static async Task<IResult> DeleteTask(int id, TaskDb db)
+    private static async Task<Results<NoContent, BadRequest<string>>> DeleteTask(int id, TaskDb db)
     {
         var taskRequisitada = await db.Tasks.FindAsync(id);
         if(taskRequisitada == null)
         {
-            return Results.BadRequest("Task não encontrada");
+            return TypedResults.BadRequest("Task não encontrada");
         }
 
         db.Tasks.Remove(taskRequisitada);
 
         await db.SaveChangesAsync();
 
-        return Results.NotFound();
+        return TypedResults.NoContent();
     }
 }
